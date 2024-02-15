@@ -1,16 +1,24 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
-
+import React, { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import { auth } from "../firebase";
+import { signOut } from "firebase/auth";
+import { toast } from "react-toastify";
+import { useAuthState } from "react-firebase-hooks/auth";
 const Header = () => {
   const navigate = useNavigate();
+  const [user, loading] = useAuthState(auth);
+  useEffect(() => {
+    if (user) navigate("/dashboard");
+    else navigate("/");
+  }, [user, loading]);
   function handleLogout() {
     signOut(auth)
       .then(() => {
-        alert("Logout!");
+        toast.success("Logout!");
         navigate("/");
       })
       .catch((error) => {
-        alert(error);
+        toast.error(error);
       });
   }
   return (
