@@ -19,7 +19,6 @@ const Signup = () => {
   const navigate = useNavigate();
   function signupWithEmail() {
     setLoading(true);
-    console.log(name, email, password, confirmPassword);
     if (!name && !email && password.length > 5 && confirmPassword.length > 5)
       toast.error("All fields are mantadory");
 
@@ -45,7 +44,6 @@ const Signup = () => {
     }
   }
   async function createDoc(user) {
-    console.log(user, user.uid);
     if (!user) return;
     const userRef = doc(db, "users", user.uid);
     const userData = await getDoc(userRef);
@@ -73,7 +71,6 @@ const Signup = () => {
         const credential = GoogleAuthProvider.credentialFromResult(result);
         const token = credential.accessToken;
         const user = result.user;
-        console.log(user);
         createDoc(user);
         setLoading(false);
         toast.success("User Sign Up Successfully");

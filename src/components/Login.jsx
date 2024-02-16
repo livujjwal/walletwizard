@@ -16,13 +16,11 @@ const Login = () => {
   const navigate = useNavigate();
   function loginWithEmail() {
     setLoading(true);
-    console.log(email, password);
     if (!email && password.length > 5) toast.error("All fields are mantadory");
     else {
       signInWithEmailAndPassword(auth, email, password)
         .then((userCredential) => {
           const user = userCredential.user;
-          console.log(user);
           toast.success("User Logged In Successfully");
           setEmail("");
           setPassword("");

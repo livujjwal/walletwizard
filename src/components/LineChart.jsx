@@ -26,26 +26,25 @@ const LineChart = ({ sortedTransactions }) => {
     radius: 1,
     innerRadius: 0.6,
   };
-let pieChart;
-let chart;
-return (
-  <div className="w-[95%] flex items-center justify-between  mx-auto my-8">
-    <div className="shadow-4xl w-[65%]">
-      <h2 className="font-semibold text-2xl my-2 mx-4">Your Analytics</h2>
-      <Line
-        {...configLineChart}
-        onReady={(chartInstance) => (chart = chartInstance)}
-      />
+  let pieChart;
+  let chart;
+  return (
+    <div className="w-[95%] flex items-center justify-between  mx-auto my-8">
+      <div className="shadow-4xl w-[65%]">
+        <h2 className="font-semibold text-2xl my-2 mx-4">Your Analytics</h2>
+        <Line
+          {...configLineChart}
+          onReady={(chartInstance) => (chart = chartInstance)}
+        />
+      </div>
+      <div className="shadow-4xl w-[32%]">
+        <h2 className="font-semibold text-2xl my-2 mx-4">Your Spendings</h2>
+        <Pie
+          {...configPieChart}
+          onReady={(chartInstance) => (pieChart = chartInstance)}
+        />
+      </div>
     </div>
-    <div className="shadow-4xl w-[32%]">
-      <h2 className="font-semibold text-2xl my-2 mx-4">Your Spendings</h2>
-      <Pie
-        {...configPieChart}
-        onReady={(chartInstance) => (pieChart = chartInstance)}
-      />
-    </div>
-  </div>
-);
+  );
 };
-// className="w-[95%] shadow-4xl mx-auto"
 export default LineChart;
