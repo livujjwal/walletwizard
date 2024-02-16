@@ -8,6 +8,8 @@ import { useAuthState } from "react-firebase-hooks/auth";
 import moment from "moment";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import TransactionTable from "./TransactionTable";
+import LineChart from "./LineChart";
+import NoTransactions from "./NoTransactions";
 const Dashboard = () => {
   const [user] = useAuthState(auth);
   const [transactions, setTransactions] = useState([]);
@@ -28,24 +30,24 @@ const Dashboard = () => {
   const handleExpensesCancel = () => {
     setIsExpensesModalVisible(false);
   };
-  async function addTransaction(transaction) {
+  async function addTransaction(transaction, many) {
     try {
       const docRef = await addDoc(
         collection(db, "users/" + user.uid + "/transactions"),
         transaction
       );
-      toast.success("Transaction Added!");
       let newArr = transactions;
       newArr.push(transaction);
       setTransactions(newArr);
       calculateBalance();
+      if (!many) toast.success("Transaction Added!");
     } catch (error) {
-      toast.error(" Couldn't add transaction");
+      if (!many) toast.error(" Couldn't add transaction");
     }
   }
   useEffect(() => {
     getTransaction();
-  }, []);
+  }, [user]);
   async function getTransaction() {
     const querySnapshot = await getDocs(
       query(collection(db, "users/" + user.uid + "/transactions"))
@@ -71,10 +73,14 @@ const Dashboard = () => {
     });
   }
 
+  let sortedTransactions = transactions.sort((a, b) => {
+    return new Date(a.date) - new Date(b.date);
+  });
+
   function onFinish(values, type) {
     const newTransaction = {
       type: type,
-      date: moment(values.date).format("YYYY-MM-DD"),
+      date: values.date.format("YYYY-MM-DD"),
       amount: values.amount,
       tag: values.tag,
       name: values.name,
@@ -109,7 +115,16 @@ const Dashboard = () => {
       >
         Expenses
       </AddExpenses>
-      <TransactionTable transactions={transactions} />
+      {transactions.length != 0 ? (
+        <LineChart sortedTransactions={sortedTransactions} />
+      ) : (
+        <NoTransactions />
+      )}
+      <TransactionTable
+        transactions={transactions}
+        addTransaction={addTransaction}
+        getTransaction={getTransaction}
+      />
     </div>
   );
 };
