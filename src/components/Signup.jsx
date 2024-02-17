@@ -81,6 +81,7 @@ const Signup = () => {
         toast.error(error.message);
       });
   }
+
   return (
     <div className="w-screen h-[90vh] flex items-center justify-center mt-4">
       <div className="w-[60%] max-w-[450px] auto shadow-4xl bottom-4 py-4 px-10">

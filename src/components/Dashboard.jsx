@@ -5,11 +5,10 @@ import AddExpenses from "../Modals/AddExpenses";
 import { toast } from "react-toastify";
 import { auth, db } from "../firebase";
 import { useAuthState } from "react-firebase-hooks/auth";
-import moment from "moment";
 import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import TransactionTable from "./TransactionTable";
-import LineChart from "./LineChart";
 import NoTransactions from "./NoTransactions";
+import Chart from "./Chart";
 const Dashboard = () => {
   const [user] = useAuthState(auth);
   const [transactions, setTransactions] = useState([]);
@@ -37,6 +36,7 @@ const Dashboard = () => {
         transaction
       );
       let newArr = transactions;
+      let trans = { ...transaction, key: transactions.length + 1 };
       newArr.push(transaction);
       setTransactions(newArr);
       calculateBalance();
@@ -46,15 +46,16 @@ const Dashboard = () => {
     }
   }
   useEffect(() => {
-    getTransaction();
+    if (user) getTransaction();
   }, [user]);
   async function getTransaction() {
-    const querySnapshot = await getDocs(
+    const queryRes = await getDocs(
       query(collection(db, "users/" + user.uid + "/transactions"))
     );
     const transactionArray = [];
-    querySnapshot.forEach((doc) => transactionArray.push(doc.data()));
-    toast.success("Transaction fetch");
+    queryRes.forEach((doc) => {
+      transactionArray.push({ ...doc.data(), key: doc.id });
+    });
     setTransactions(transactionArray);
   }
   useEffect(() => {
@@ -116,7 +117,7 @@ const Dashboard = () => {
         Expenses
       </AddExpenses>
       {transactions.length != 0 ? (
-        <LineChart sortedTransactions={sortedTransactions} />
+        <Chart sortedTransactions={sortedTransactions} />
       ) : (
         <NoTransactions />
       )}

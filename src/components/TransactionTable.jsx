@@ -107,15 +107,21 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
           value={typeFilter}
           placeholder="Filter"
         >
-          <option value="">All</option>
-          <option value="income">Income</option>
-          <option value="expenses">Expenses</option>
+          <option key={"1"} value="">
+            All
+          </option>
+          <option key={"2"} value="income">
+            Income
+          </option>
+          <option key={"3"} value="expenses">
+            Expenses
+          </option>
         </select>
       </div>
       {transactions.length != 0 && (
         <div className="shadow-4xl w-full mx-auto my-4">
           <div className="w-[93.5%] mx-auto  flex items-center my-4 justify-between">
-            <h1>My Transaction</h1>
+            <h1 className="font-medium">My Transaction</h1>
             <Radio.Group
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value)}

@@ -15,13 +15,14 @@ const Header = () => {
   function handleLogout() {
     signOut(auth)
       .then(() => {
-        toast.success("Logout!");
+        toast.success("User Logout!");
         navigate("/");
       })
       .catch((error) => {
         toast.error(error);
       });
   }
+
   return (
     <div className="z-20 bg-theme py-2 px-6 sticky top-0 left-0 w-full flex justify-between items-center">
       <p className="text-white font-medium ">WalletWizard</p>
