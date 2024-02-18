@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import Input from "./Input";
 import Button from "./Button";
 import {
@@ -9,7 +9,9 @@ import {
 import { auth, db, doc, setDoc, getDoc, provider } from "../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import ThemeContext from "../utils/ThemeContext";
 const Signup = () => {
+  const { theme } = useContext(ThemeContext);
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [photoURL, setPhotoURL] = useState("");
@@ -84,9 +86,18 @@ const Signup = () => {
 
   return (
     <div className="w-screen h-[90vh] flex items-center justify-center mt-4">
-      <div className="w-[60%] max-w-[450px] auto shadow-4xl bottom-4 py-4 px-10">
+      <div
+        className={
+          theme === "dark"
+            ? "w-[60%] shadow-5xl max-w-[450px] auto bottom-4 shadow-current[#247A4D] py-4 px-10 text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md "
+            : "w-[60%] max-w-[450px] shadow-4xl  bottom-4 py-4 px-10 flex flex-col  rounded-md "
+        }
+      >
         <h2 className="text-center font-medium">
-          Sign Up on <span className="text-theme">WalletWizard</span>
+          Sign Up on{" "}
+          <span className={theme === "dark" ? "text-[#e6e6e6]" : "text-theme"}>
+            WalletWizard
+          </span>
         </h2>
         <form
           className="gap-4"
@@ -143,7 +154,15 @@ const Signup = () => {
           onClick={() => navigate("/")}
         >
           Or Have An Account Already?{" "}
-          <span className="text-theme">Click Here</span>
+          <span
+            className={
+              theme === "dark"
+                ? "text-[#D8DED6] hover:text-white"
+                : "text-theme"
+            }
+          >
+            Click Here
+          </span>
         </p>
       </div>
     </div>

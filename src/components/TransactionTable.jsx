@@ -1,10 +1,11 @@
 import { Radio, Table } from "antd";
-import React, { useState } from "react";
+import { useState, useContext } from "react";
 import searchImg from "../assets/search.svg";
-import Button from "./Button";
 import { parse, unparse } from "papaparse";
 import { toast } from "react-toastify";
+import ThemeContext from "../utils/ThemeContext";
 const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
+  const { theme } = useContext(ThemeContext);
   const [loading, setLaoding] = useState(false);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
@@ -47,7 +48,6 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
     if (sortKey === "amount") return a.amount - b.amount;
     else return 0;
   });
-
   function exportCSV() {
     const csv = unparse({
       fields: ["name", "amount", "tag", "type", "date"],
@@ -87,14 +87,22 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
   return (
     <div className="flex flex-col w-[95%] mx-auto">
       <div className="w-full mx-auto  flex items-center justify-between">
-        <div className="w-[70%] flex items-center">
+        <div
+          className={
+            theme ? "w-[70%] flex items-center  " : "w-[70%] flex items-center "
+          }
+        >
           <img
             className="absolute w-5 inline-block m-2 text-slate-200"
             src={searchImg}
             alt="search logo"
           />
           <input
-            className=" w-full my-4 p-2 px-8 outline-none border rounded shadow-4xl text-sm"
+            className={
+              theme === "dark"
+                ? "w-full shadow-5xl my-4 p-2 px-8 outline-none rounded text-sm bg-gradient-to-tr from-[#08203e] from-30% via-cyan-800 to-70%  to-[#557c93] text-[#fff] placeholder:text-[#e6e6e6]"
+                : "w-full my-4 p-2 px-8 outline-none border rounded text-sm shadow-4xl "
+            }
             value={search}
             onChange={(e) => setSearch(e.target.value)}
             placeholder={"Search by Name"}
@@ -102,12 +110,24 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
         </div>
 
         <select
-          className="w-[28%] rounded shadow-4xl  bg-transparent p-[.64rem]  my-4 border text-sm"
+          className={
+            theme === "dark"
+              ? "w-[28%] shadow-5xl rounded bg-gradient-to-tr from-[#08203e] to-[#557c93] p-[.64rem] my-4 text-sm text-[#e6e6e6] focus:bg-[#557c93]"
+              : "w-[28%] rounded shadow-4xl  bg-transparent p-[.64rem]  my-4 border text-sm"
+          }
           onChange={(e) => setTypeFilter(e.target.value)}
           value={typeFilter}
           placeholder="Filter"
         >
-          <option key={"1"} value="">
+          <option
+            className={
+              theme === "dark"
+                ? "bg-gradient-to-tr from-[#08203e] to-[#557c93] "
+                : ""
+            }
+            key={"1"}
+            value=""
+          >
             All
           </option>
           <option key={"2"} value="income">
@@ -119,34 +139,74 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
         </select>
       </div>
       {transactions.length != 0 && (
-        <div className="shadow-4xl w-full mx-auto my-4">
+        <div
+          className={
+            theme === "dark"
+              ? "w-full shadow-5xl mx-auto my-4 flex flex-col rounded text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B]"
+              : "shadow-4xl w-full mx-auto my-4 flex flex-col rounded"
+          }
+        >
           <div className="w-[93.5%] mx-auto  flex items-center my-4 justify-between">
             <h1 className="font-medium">My Transaction</h1>
             <Radio.Group
+              className={
+                theme === "dark"
+                  ? " gap-0 bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] selection:bg-bg-gradient-to-tl focus:bg-[#69a697] selection:to-[#6f8077] "
+                  : ""
+              }
               value={sortKey}
               onChange={(e) => setSortKey(e.target.value)}
             >
-              <Radio.Button className="px-2 h-[2.25rem]" value="">
+              <Radio.Button
+                className={
+                  theme === "dark"
+                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none selection:bg-[#247A4D] focus-visible:text-[#e6e6e6]"
+                    : "px-2 h-[2.25rem]"
+                }
+                value=""
+              >
                 No Sort
               </Radio.Button>
-              <Radio.Button className="px-2 h-[2.25rem]" value="date">
+              <Radio.Button
+                className={
+                  theme === "dark"
+                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none"
+                    : "px-2 h-[2.25rem]"
+                }
+                value="date"
+              >
                 Sort by Date
               </Radio.Button>
-              <Radio.Button className="px-2 h-[2.25rem]" value="amount">
+              <Radio.Button
+                className={
+                  theme === "dark"
+                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none"
+                    : "px-2 h-[2.25rem]"
+                }
+                value="amount"
+              >
                 Sort by Amount
               </Radio.Button>
             </Radio.Group>
             <div className="flex w-auto  gap-4">
               <button
                 disabled={loading}
-                className="text-sm rounded text-theme bg-white hover:bg-theme hover:text-white text-center my-2 px-4 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center "
+                className={
+                  theme === "dark"
+                    ? "text-sm rounded text-[#e6e6e6] bg-white hover:bg-theme hover:text-white text-center my-2 px-4 py-[.45rem] w-[10rem] flex justify-center items-center bg-gradient-to-tl from-[#0B2C24] to-[#247A4D]"
+                    : "text-sm rounded text-theme bg-white hover:bg-theme hover:text-white text-center my-2 px-4 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center "
+                }
                 onClick={exportCSV}
               >
                 {loading ? "Loading.." : "Export to CSV"}
               </button>
               <label
                 htmlFor="csv-file"
-                className="cursor-pointer text-sm rounded hover:text-theme hover:bg-white bg-theme text-white text-center my-2 px-4 py-[.455rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
+                className={
+                  theme === "dark"
+                    ? "cursor-pointer text-sm rounded text-[#e6e6e6] bg-white hover:bg-theme hover:text-white text-center my-2 px-4 py-[.45rem] w-[10rem] flex justify-center items-center bg-gradient-to-tl from-[#0B2C24] to-[#247A4D]"
+                    : "cursor-pointer text-sm rounded hover:text-theme hover:bg-white bg-theme text-white text-center my-2 px-4 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center "
+                }
               >
                 {loading ? "Loading.." : "Import from CSV"}
               </label>
@@ -161,7 +221,11 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
             </div>
           </div>
           <Table
-            className="w-[96%] mx-auto"
+            className={
+              theme === "dark"
+                ? "w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
+                : "w-[96%] mx-auto"
+            }
             dataSource={sortedTransaction}
             columns={columns}
           />

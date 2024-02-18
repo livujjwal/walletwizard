@@ -2,8 +2,11 @@ import { useState } from "react";
 import LineChart from "./LineChart";
 import PieChart from "./PieChart";
 import Button from "./Button";
+import { useContext } from "react";
+import ThemeContext from "../utils/ThemeContext";
 
 const Chart = ({ sortedTransactions }) => {
+  const { theme } = useContext(ThemeContext);
   const [showSpending, setShowSpending] = useState(true);
   const lineChartData = sortedTransactions.map((item) => {
     return { date: item.date, amount: parseFloat(item.amount) };
@@ -14,7 +17,6 @@ const Chart = ({ sortedTransactions }) => {
       return { tag: item.tag, amount: parseFloat(item.amount) };
     }
   });
-
   let finalSpendingData = [];
   const temp = spendingData.reduce((acc, item) => {
     let key = item.tag;
@@ -45,10 +47,22 @@ const Chart = ({ sortedTransactions }) => {
 
   return (
     <div className="w-[95%] flex items-center justify-between  mx-auto my-8 h-[32rem]">
-      <div className="shadow-4xl w-[62%] h-full">
+      <div
+        className={
+          theme === "dark"
+            ? "w-[62%] shadow-5xl h-full text-[#393737] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
+            : "shadow-4xl w-[62%] h-full"
+        }
+      >
         <LineChart data={lineChartData} />
       </div>
-      <div className="shadow-4xl w-[35%] flex items-center flex-col h-full">
+      <div
+        className={
+          theme === "dark"
+            ? "w-[35%] shadow-5xl flex items-center flex-col h-full text-[#201f1f] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
+            : "shadow-4xl w-[35%] flex items-center flex-col h-full"
+        }
+      >
         {showSpending ? (
           <PieChart data={finalSpendingData} title={"Your Spendings"} />
         ) : (
@@ -56,7 +70,11 @@ const Chart = ({ sortedTransactions }) => {
         )}
         <button
           onClick={() => setShowSpending(!showSpending)}
-          className="text-sm rounded hover:text-white text-theme hover:bg-theme bg-white  text-center my-2 p-1 w-1/2 border-[1px] border-theme"
+          className={
+            theme === "dark"
+              ? "text-sm rounded text-[#e6e6e6] bg-white hover:bg-theme hover:text-white text-center my-2 p-1 w-1/2 flex justify-center items-center bg-gradient-to-tl from-[#0B2C24] to-[#247A4D]"
+              : "text-sm rounded text-theme bg-white hover:bg-theme hover:text-white text-center my-2 p-1 w-1/2 border-[1px] border-theme flex justify-center items-center "
+          }
         >
           {showSpending ? "Show Incomes" : "Show Spendings"}
         </button>

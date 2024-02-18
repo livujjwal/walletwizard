@@ -1,9 +1,10 @@
-import { Card, Row } from "antd";
-import React from "react";
+import { Row } from "antd";
+import React, { useContext } from "react";
 import Button from "./Button";
 import { useAuthState } from "react-firebase-hooks/auth";
 import { deleteDoc, doc } from "firebase/firestore";
 import { auth, db } from "../firebase";
+import ThemeContext from "../utils/ThemeContext";
 
 const Cards = ({
   showIncomeModal,
@@ -12,6 +13,7 @@ const Cards = ({
   expenses,
   balance,
 }) => {
+  const { theme } = useContext(ThemeContext);
   const [user] = useAuthState(auth);
   async function handleDelete() {
     try {
@@ -29,26 +31,51 @@ const Cards = ({
     } catch (error) {
       console.log(error);
     }
-    // await updateDoc(doc(db, "user/" + user.uid + "/transactions"), {
-    //     capital: deleteField()
-    // });
   }
 
   return (
     <div>
-      <Row className="flex justify-between w-[95%] mx-auto my-6 items-center gap-4">
-        <Card className="shadow-4xl w-[30%]" title="Current Balance">
-          <p className="mb-4">₹{balance}</p>
+      <Row
+        className={
+          theme == "dark"
+            ? "flex justify-between w-[95%] mx-auto py-6 items-center gap-4"
+            : "flex justify-between w-[95%] mx-auto py-6 items-center gap-4"
+        }
+      >
+        <div
+          className={
+            theme === "dark"
+              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+          }
+        >
+          <h1 className="text-base text-center my-2">Current Balance</h1>
+          <p className="my-4">₹{balance}</p>
           <Button text="Reset Balance" onClick={handleDelete} />
-        </Card>
-        <Card className="shadow-4xl w-[30%]" title="Total Income">
-          <p className="mb-4">₹{income}</p>
+        </div>
+        <div
+          className={
+            theme === "dark"
+              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+          }
+        >
+          <h1 className="text-base text-center my-2">Total Income</h1>
+          <p className="my-4">₹{income}</p>
           <Button text="Add Income" onClick={showIncomeModal} />
-        </Card>
-        <Card className="shadow-4xl w-[30%]" title="Total Expenses">
-          <p className="mb-4">₹{expenses}</p>
+        </div>
+
+        <div
+          className={
+            theme === "dark"
+              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+          }
+        >
+          <h1 className="text-base text-center my-2">Total Expenses</h1>
+          <p className="my-4">₹{expenses}</p>
           <Button text="Add Expenses" onClick={showExpensesModal} />
-        </Card>
+        </div>
       </Row>
     </div>
   );

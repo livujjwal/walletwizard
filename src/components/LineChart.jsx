@@ -7,6 +7,28 @@ const LineChart = ({ data }) => {
     height: 400,
     xField: "date",
     yField: "amount",
+    label: {
+      type: "inner",
+      offset: "-50%",
+      content: "{amount}",
+      style: {
+        textAlign: "center",
+        fontSize: 14,
+        color: "#e6e6e6",
+      },
+    },
+    statistic: {
+      title: false,
+      content: {
+        style: {
+          whiteSpace: "pre-wrap",
+          overflow: "hidden",
+          textOverflow: "ellipsis",
+          color: "#fff",
+        },
+        content: "AntV\nG2Plot",
+      },
+    },
   };
 
   return (

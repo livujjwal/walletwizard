@@ -9,7 +9,10 @@ import {
 import { auth, db, doc, provider, setDoc } from "../firebase";
 import { toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import { useContext } from "react";
+import ThemeContext from "../utils/ThemeContext";
 const Login = () => {
+  const { theme } = useContext(ThemeContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [loading, setLoading] = useState(false);
@@ -51,9 +54,20 @@ const Login = () => {
   return (
     <>
       <div className="w-screen h-[90vh] flex items-center justify-center">
-        <div className="w-[60%] max-w-[450px] auto shadow-4xl bottom-4 py-4 px-10">
+        <div
+          className={
+            theme === "dark"
+              ? "w-[60%] shadow-5xl max-w-[450px] auto bottom-4 py-4 px-10 text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md "
+              : "w-[60%] max-w-[450px] auto shadow-4xl bottom-4 py-4 px-10 flex flex-col  rounded-md "
+          }
+        >
           <h2 className="text-center font-medium">
-            Login on <span className="text-theme">WalletWizard</span>
+            Login on{" "}
+            <span
+              className={theme === "dark" ? "text-[#e6e6e6]" : "text-theme"}
+            >
+              WalletWizard
+            </span>
           </h2>
           <form
             className="gap-4"
@@ -94,7 +108,16 @@ const Login = () => {
             onClick={() => navigate("/signup")}
           >
             Or Don't Have An Account?{" "}
-            <span className="text-theme"> Click Here</span>
+            <span
+              className={
+                theme === "dark"
+                  ? "text-[#D8DED6] hover:text-white"
+                  : "text-theme"
+              }
+            >
+              {" "}
+              Click Here
+            </span>
           </p>
         </div>
       </div>

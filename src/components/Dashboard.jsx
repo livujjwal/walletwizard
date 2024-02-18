@@ -9,7 +9,10 @@ import { addDoc, collection, getDocs, query, where } from "firebase/firestore";
 import TransactionTable from "./TransactionTable";
 import NoTransactions from "./NoTransactions";
 import Chart from "./Chart";
+import { useContext } from "react";
+import ThemeContext from "../utils/ThemeContext";
 const Dashboard = () => {
+  const { theme } = useContext(ThemeContext);
   const [user] = useAuthState(auth);
   const [transactions, setTransactions] = useState([]);
   const [isIncomeModalVisible, setIsIncomeModalVisible] = useState(false);
