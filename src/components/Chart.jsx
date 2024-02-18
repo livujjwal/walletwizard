@@ -46,12 +46,12 @@ const Chart = ({ sortedTransactions }) => {
   }, {});
 
   return (
-    <div className="w-[95%] flex max-md:flex-col items-center justify-between  mx-auto my-8 md:h-[32rem] max-md:gap-8">
+    <div className="w-[95%] flex max-lg:flex-col items-center justify-between max-lg:gap-10  mx-auto my-8 lg:h-[40rem] max-md:gap-8">
       <div
         className={
           theme === "dark"
-            ? "w-[82%] md:w-[62%] shadow-5xl h-full text-[#393737] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
-            : "shadow-4xl w-[82%] md:w-[62%] h-full"
+            ? "w-[82%] lg:w-[62%] shadow-5xl h-full max-lg:h-[40rem]  text-[#393737] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
+            : "shadow-4xl w-[82%] lg:w-[62%] h-full max-lg:h-[40rem]"
         }
       >
         <LineChart data={lineChartData} />
@@ -59,8 +59,8 @@ const Chart = ({ sortedTransactions }) => {
       <div
         className={
           theme === "dark"
-            ? "w-[82%] md:w-[35%] shadow-5xl flex items-center flex-col h-full text-[#201f1f] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
-            : "shadow-4xl w-[82%] md:w-[35%] flex items-center flex-col h-full"
+            ? "w-[82%] lg:w-[35%] shadow-5xl flex items-center flex-col h-full max-lg:h-[40rem] text-[#201f1f] bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC] rounded"
+            : "shadow-4xl w-[82%] lg:w-[35%] flex items-center flex-col h-full max-lg:h-[40rem]"
         }
       >
         {showSpending ? (

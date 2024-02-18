@@ -1,43 +1,17 @@
-import { Radio, Table } from "antd";
+import { Radio } from "antd";
 import { useState, useContext } from "react";
 import searchImg from "../assets/search.svg";
 import { parse, unparse } from "papaparse";
 import { toast } from "react-toastify";
 import ThemeContext from "../utils/ThemeContext";
+import { Basic } from "./Table";
 const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
   const { theme } = useContext(ThemeContext);
   const [loading, setLaoding] = useState(false);
   const [search, setSearch] = useState("");
   const [typeFilter, setTypeFilter] = useState("");
-  const [sortKey, setSortKey] = useState("");
-  const columns = [
-    {
-      title: "Name",
-      dataIndex: "name",
-      key: "name",
-    },
-    {
-      title: "Amount",
-      dataIndex: "amount",
-      key: "amount",
-    },
-    {
-      title: "Tag",
-      dataIndex: "tag",
-      key: "tag",
-    },
-    {
-      title: "Type",
-      dataIndex: "type",
-      key: "type",
-    },
+  const [sortKey, setSortKey] = useState("noSort");
 
-    {
-      title: "Date",
-      dataIndex: "date",
-      key: "date",
-    },
-  ];
   let filteredTransaction = transactions.filter(
     (item) =>
       item.name.toLowerCase().includes(search.toLowerCase()) &&
@@ -83,6 +57,10 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
     } catch (error) {
       toast.error(error);
     }
+  }
+  function handleFilter(e) {
+    setSortKey(e.target.value);
+    console.log(e.target.value);
   }
   return (
     <div className="flex flex-col md:w-[95%] w-[82%] mx-auto">
@@ -146,48 +124,78 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
               : "shadow-4xl w-full mx-auto my-4 flex flex-col rounded"
           }
         >
-          <div className="w-[93.5%] mx-auto  flex max-md:flex-col items-center my-4 justify-between max-md:gap-6">
+          <div className="w-[93.5%] mx-auto  flex  items-center my-4 justify-between max-lg:gap-6 max-lg:flex-col">
             <h1 className="font-medium">My Transaction</h1>
-            <Radio.Group
-              className={
-                theme === "dark"
-                  ? " gap-0 bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] selection:bg-bg-gradient-to-tl focus:bg-[#69a697] selection:to-[#6f8077] "
-                  : ""
-              }
-              value={sortKey}
-              onChange={(e) => setSortKey(e.target.value)}
-            >
-              <Radio.Button
+            <div className="flex max-lg:gap-4">
+              <label
+                for="noSort"
                 className={
-                  theme === "dark"
-                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none selection:bg-[#247A4D] focus-visible:text-[#e6e6e6]"
-                    : "px-2 h-[2.25rem]"
+                  sortKey === "noSort"
+                    ? theme === "dark"
+                      ? "cursor-pointer text-sm rounded-md  bg-theme text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                      : "cursor-pointer text-sm rounded-md  bg-theme text-white text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
+                    : theme === "dark"
+                    ? "cursor-pointer text-sm rounded-md  bg-white  text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                    : "cursor-pointer text-sm rounded-md text-theme bg-white  text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
                 }
-                value=""
               >
                 No Sort
-              </Radio.Button>
-              <Radio.Button
+              </label>
+              <input
+                type="radio"
+                id="noSort"
+                name="noSort"
+                value="noSort"
+                className="hidden"
+                onChange={handleFilter}
+              />
+
+              <label
+                for="date"
                 className={
-                  theme === "dark"
-                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none"
-                    : "px-2 h-[2.25rem]"
+                  sortKey === "date"
+                    ? theme === "dark"
+                      ? "cursor-pointer text-sm rounded-md    bg-theme text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                      : "cursor-pointer text-sm rounded-md  bg-theme text-white text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
+                    : theme === "dark"
+                    ? "cursor-pointer text-sm rounded-md    text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                    : "cursor-pointer text-sm rounded-md text-theme  bg-white text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
                 }
-                value="date"
               >
                 Sort by Date
-              </Radio.Button>
-              <Radio.Button
+              </label>
+              <input
+                type="radio"
+                id="date"
+                name="date"
+                value="date"
+                className="hidden"
+                onChange={handleFilter}
+              />
+
+              <label
+                for="amount"
                 className={
-                  theme === "dark"
-                    ? "px-2 h-[2.25rem] bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] border-none"
-                    : "px-2 h-[2.25rem]"
+                  sortKey === "amount"
+                    ? theme === "dark"
+                      ? "cursor-pointer text-sm rounded-md  bg-theme text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                      : "cursor-pointer text-sm rounded-md  bg-theme text-white text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
+                    : theme === "dark"
+                    ? "cursor-pointer text-sm rounded-md  bg-white  text-center my-2 px-2 py-[.45rem] w-[10rem]  flex justify-center items-center  bg-gradient-to-tl from-[#0B2C24] to-[#247A4D] text-[#e6e6e6]"
+                    : "cursor-pointer text-sm rounded-md text-theme bg-white text-center my-2 px-2 py-[.45rem] w-[10rem] border-[1px] border-theme flex justify-center items-center"
                 }
-                value="amount"
               >
                 Sort by Amount
-              </Radio.Button>
-            </Radio.Group>
+              </label>
+              <input
+                type="radio"
+                id="amount"
+                name="date"
+                value="amount"
+                className="hidden"
+                onChange={handleFilter}
+              />
+            </div>
             <div className="md:flex w-auto  gap-4 max-md:gap-6">
               <button
                 disabled={loading}
@@ -220,14 +228,13 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
               />
             </div>
           </div>
-          <Table
+          <Basic
             className={
               theme === "dark"
                 ? " w-[80%] text-[1px] md:w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
                 : "w-[96%] mx-auto"
             }
-            dataSource={sortedTransaction}
-            columns={columns}
+            data={sortedTransaction}
           />
         </div>
       )}

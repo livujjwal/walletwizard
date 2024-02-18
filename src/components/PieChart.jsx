@@ -1,28 +1,36 @@
-import { Pie } from "@ant-design/charts";
+import { Pie } from "@ant-design/plots";
 const PieChart = ({ data, title }) => {
   const config = {
     data,
     width: 400,
     angleField: "amount",
     colorField: "tag",
-    radius: 0.8,
-    innerRadius: 0.5,
+    radius: 0.7,
+    innerRadius: 0.4,
     label: {
       type: "inner",
+      offset: "-50%",
+      content: "type",
       style: {
         textAlign: "center",
         fontSize: 14,
-        backgroundColor: "#fff",
       },
     },
+    interactions: [
+      {
+        type: "element-selected",
+      },
+      {
+        type: "element-active",
+      },
+    ],
     statistic: {
-      title: false,
+      title: true,
       content: {
         style: {
           whiteSpace: "pre-wrap",
           overflow: "hidden",
           textOverflow: "ellipsis",
-          backgroundColor: "#fff",
         },
         content: "AntV\nG2Plot",
       },
@@ -30,9 +38,9 @@ const PieChart = ({ data, title }) => {
   };
 
   return (
-    <div className="w-full">
+    <div className="w-[90%] mx-auto">
       <h2 className="font-semibold text-2xl my-2 mx-4">{title}</h2>
-      <div className="flex md:items-center max-md:ml-[-40px]">
+      <div className="flex items-center justify-center mx-auto w-[90%]">
         <Pie {...config} />
       </div>
     </div>
