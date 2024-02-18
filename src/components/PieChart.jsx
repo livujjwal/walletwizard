@@ -3,14 +3,12 @@ const PieChart = ({ data, title }) => {
   const config = {
     data,
     width: 400,
-    height: 400,
     angleField: "amount",
     colorField: "tag",
     radius: 0.8,
     innerRadius: 0.5,
     label: {
       type: "inner",
-      offset: "-50%",
       style: {
         textAlign: "center",
         fontSize: 14,
@@ -32,9 +30,9 @@ const PieChart = ({ data, title }) => {
   };
 
   return (
-    <div>
+    <div className="w-full">
       <h2 className="font-semibold text-2xl my-2 mx-4">{title}</h2>
-      <div className="flex items-center">
+      <div className="flex md:items-center max-md:ml-[-40px]">
         <Pie {...config} />
       </div>
     </div>

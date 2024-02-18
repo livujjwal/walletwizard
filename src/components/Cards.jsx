@@ -35,18 +35,18 @@ const Cards = ({
 
   return (
     <div>
-      <Row
+      <div
         className={
           theme == "dark"
-            ? "flex justify-between w-[95%] mx-auto py-6 items-center gap-4"
-            : "flex justify-between w-[95%] mx-auto py-6 items-center gap-4"
+            ? "flex max-md:flex-col justify-between w-[95%] mx-auto py-6 items-center gap-4"
+            : "flex max-md:flex-col justify-between w-[95%] mx-auto py-6 items-center gap-4"
         }
       >
         <div
           className={
             theme === "dark"
-              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
-              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+              ? "w-[80%] md:w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[80%] md:w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
           }
         >
           <h1 className="text-base text-center my-2">Current Balance</h1>
@@ -56,8 +56,8 @@ const Cards = ({
         <div
           className={
             theme === "dark"
-              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
-              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+              ? "w-[80%] md:w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[80%] md:w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
           }
         >
           <h1 className="text-base text-center my-2">Total Income</h1>
@@ -68,15 +68,15 @@ const Cards = ({
         <div
           className={
             theme === "dark"
-              ? "w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
-              : "shadow-4xl w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
+              ? "w-[80%] md:w-[30%] shadow-5xl text-[#e6e6e6] bg-gradient-to-tr from-[#0E1C26] to-[#2A454B] flex flex-col  rounded-md h-[11rem] px-8 py-4 "
+              : "shadow-4xl w-[80%] md:w-[30%] flex flex-col  rounded-md h-[11rem] px-8 py-4"
           }
         >
           <h1 className="text-base text-center my-2">Total Expenses</h1>
           <p className="my-4">₹{expenses}</p>
           <Button text="Add Expenses" onClick={showExpensesModal} />
         </div>
-      </Row>
+      </div>
     </div>
   );
 };

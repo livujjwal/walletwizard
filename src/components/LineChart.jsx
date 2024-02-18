@@ -3,8 +3,7 @@ import { Line } from "@ant-design/charts";
 const LineChart = ({ data }) => {
   const config = {
     data,
-    width: 750,
-    height: 400,
+
     xField: "date",
     yField: "amount",
     label: {

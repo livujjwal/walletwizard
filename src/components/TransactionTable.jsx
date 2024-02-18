@@ -85,7 +85,7 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
     }
   }
   return (
-    <div className="flex flex-col w-[95%] mx-auto">
+    <div className="flex flex-col md:w-[95%] w-[82%] mx-auto">
       <div className="w-full mx-auto  flex items-center justify-between">
         <div
           className={
@@ -146,7 +146,7 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
               : "shadow-4xl w-full mx-auto my-4 flex flex-col rounded"
           }
         >
-          <div className="w-[93.5%] mx-auto  flex items-center my-4 justify-between">
+          <div className="w-[93.5%] mx-auto  flex max-md:flex-col items-center my-4 justify-between max-md:gap-6">
             <h1 className="font-medium">My Transaction</h1>
             <Radio.Group
               className={
@@ -188,7 +188,7 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
                 Sort by Amount
               </Radio.Button>
             </Radio.Group>
-            <div className="flex w-auto  gap-4">
+            <div className="md:flex w-auto  gap-4 max-md:gap-6">
               <button
                 disabled={loading}
                 className={
@@ -223,7 +223,7 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
           <Table
             className={
               theme === "dark"
-                ? "w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
+                ? " w-[80%] text-[1px] md:w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
                 : "w-[96%] mx-auto"
             }
             dataSource={sortedTransaction}
