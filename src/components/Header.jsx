@@ -25,7 +25,6 @@ const Header = () => {
         toast.error(error);
       });
   }
-  console.log(theme);
   return (
     <div
       className={
@@ -37,7 +36,7 @@ const Header = () => {
       <p className="text-white font-medium ">WalletWizard</p>
       <div className="flex items-center gap-4">
         <img
-          className="w-6 text-transparent"
+          className="w-6 text-transparent "
           src={themeImg}
           alt="Theme"
           onClick={() => {
@@ -48,7 +47,7 @@ const Header = () => {
         {user && (
           <div className="flex items-center gap-4">
             <img
-              className="w-7"
+              className="w-7 rounded-full"
               src={user.photoURL ? user.photoURL : userImg}
               alt="user logo"
             />

@@ -60,7 +60,6 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
   }
   function handleFilter(e) {
     setSortKey(e.target.value);
-    console.log(e.target.value);
   }
   return (
     <div className="flex flex-col md:w-[95%] w-[82%] mx-auto">

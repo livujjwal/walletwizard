@@ -26,11 +26,8 @@ const Cards = ({
             "users/" + user.uid
           )
         );
-        console.log("delted");
       }
-    } catch (error) {
-      console.log(error);
-    }
+    } catch (error) {}
   }
 
   return (
