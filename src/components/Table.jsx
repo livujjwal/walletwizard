@@ -52,22 +52,28 @@ const customStylesDark = {
   cells: {
     style: { backgroundColor: "#0B2C24", color: "#e6e6e6" },
   },
+  bottom: {
+    style: { backgroundColor: "#0B2C24", color: "#e6e6e6" },
+  },
 };
 
 export const Basic = ({ data }) => {
   const { theme } = useContext(ThemeContext);
   return (
-    <DataTable
-      customStyles={theme === "dark" ? customStylesDark : ""}
+    <div
       className={
         theme === "dark"
-          ? " w-[80%] text-[1px] md:w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
-          : "w-[96%] mx-auto"
+          ? " w-full text-[1px] md:w-[96%] mx-auto text-[#e6e6e6]  hover:bg-theme hover:text-white bg-gradient-to-tr from-[#CAF2EF] to-[#C9EFDC]"
+          : "w-full mx-auto"
       }
-      columns={columns}
-      data={data}
-      pagination
-    />
+    >
+      <DataTable
+        customStyles={theme === "dark" ? customStylesDark : ""}
+        columns={columns}
+        data={data}
+        pagination
+      />
+    </div>
   );
 };
 

@@ -125,7 +125,7 @@ const TransactionTable = ({ transactions, addTransaction, getTransaction }) => {
         >
           <div className="w-[93.5%] mx-auto  flex  items-center my-4 justify-between max-lg:gap-6 max-lg:flex-col">
             <h1 className="font-medium">My Transaction</h1>
-            <div className="flex max-lg:gap-4">
+            <div className="flex  max-sm:flex-col">
               <label
                 for="noSort"
                 className={

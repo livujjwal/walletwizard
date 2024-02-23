@@ -8,31 +8,12 @@ const PieChart = ({ data, title }) => {
     radius: 0.7,
     innerRadius: 0.4,
     label: {
-      type: "inner",
+      type: "outter",
       offset: "-50%",
-      content: "type",
+      content: "amount",
       style: {
         textAlign: "center",
-        fontSize: 14,
-      },
-    },
-    interactions: [
-      {
-        type: "element-selected",
-      },
-      {
-        type: "element-active",
-      },
-    ],
-    statistic: {
-      title: true,
-      content: {
-        style: {
-          whiteSpace: "pre-wrap",
-          overflow: "hidden",
-          textOverflow: "ellipsis",
-        },
-        content: "AntV\nG2Plot",
+        fontSize: 1,
       },
     },
   };

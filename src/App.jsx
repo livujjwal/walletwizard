@@ -13,6 +13,7 @@ function App() {
 
   return (
     <div
+      test-id="app"
       className={
         theme == "dark"
           ? "text-[#e6e6e6] bg-gradient-to-tr from-[#0e1c26] to-[#0D1113]"
